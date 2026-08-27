@@ -53,6 +53,11 @@ on continuing a project without a clear purpose. The classifier is free to
 omit any of these when the supplied evidence does not support them; it must
 not invent a motivation for Laura.
 
+The real one-call validation with `gpt-5.6-luna` returned 3 motivations, 1
+conflict, and 0 cold regions. The response passed handle and authority
+validation. This confirms the boundary and traceability path; it is not a
+benchmark of model quality.
+
 The map's **Presión dramática** toggle requests this projection and marks
 StoryObject nodes with restrained visual emphasis. The inspector lists the
 returned motivations and conflicts before the ordinary structured facts. The
