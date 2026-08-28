@@ -18,6 +18,8 @@ RESULT = REPO / "coordination/RESULT.md"
 CODEX = os.environ.get("CODEX_BIN", str(Path.home() / ".local/bin/codex"))
 if not Path(CODEX).exists():
     CODEX = shutil.which("codex") or "codex"
+WAKEUP = os.environ.get("ESCRIBE_WAKEUP", "0") == "1"
+WAKEUP_SCRIPT = REPO / "coordination/brave_wakeup.py"
 
 
 def run(*args: str, check: bool = True, **kwargs: object) -> subprocess.CompletedProcess[str]:
@@ -55,6 +57,10 @@ def publish(status: str, details: str) -> int:
         return 0
     run("git", "commit", "-m", f"coordination: publish {status}")
     push = run("git", "push", "origin", "HEAD:main", check=False, capture_output=True)
+    if push.returncode == 0 and WAKEUP:
+        wakeup = subprocess.run(["python3", str(WAKEUP_SCRIPT)], cwd=REPO, text=True,
+                                 capture_output=True, check=False)
+        print("wakeup: " + (wakeup.stdout + "\n" + wakeup.stderr).strip())
     return push.returncode
 
 
