@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import fcntl
 import os
+import shutil
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,6 +15,9 @@ STATE = Path(os.environ.get("ESCRIBE_STATE_DIR", Path.home() / ".local/state/esc
 LOCK = STATE / "worker.lock"
 TASK = REPO / "coordination/CURRENT_TASK.md"
 RESULT = REPO / "coordination/RESULT.md"
+CODEX = os.environ.get("CODEX_BIN", str(Path.home() / ".local/bin/codex"))
+if not Path(CODEX).exists():
+    CODEX = shutil.which("codex") or "codex"
 
 
 def run(*args: str, check: bool = True, **kwargs: object) -> subprocess.CompletedProcess[str]:
@@ -32,7 +36,7 @@ def main() -> int:
         run("git", "fetch", "origin", "main")
         run("git", "merge", "--ff-only", "origin/main")
         prompt = """Read AGENTS.md if it exists, then read coordination/CURRENT_TASK.md. Execute that task in this repository. Do not modify production systems, credentials, webhook configuration, or coordination/RESULT.md. Run appropriate tests. At the end, report a concise summary, files changed, tests run, and any blocker."""
-        codex = subprocess.run(["codex", "exec", "--cd", str(REPO), "--sandbox", "workspace-write", "--", prompt],
+        codex = subprocess.run([CODEX, "exec", "--ephemeral", "--cd", str(REPO), "--sandbox", "workspace-write", "--", prompt],
                                cwd=REPO, text=True, capture_output=True, check=False)
         output = (codex.stdout + "\n" + codex.stderr).strip()
         status = "completed" if codex.returncode == 0 else "failed"
@@ -52,4 +56,3 @@ def publish(status: str, details: str) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
