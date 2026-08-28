@@ -28,7 +28,7 @@ En una terminal, ejecuta `python3 -m unittest discover -s coordination/tests -v`
 
 ## Retorno
 
-`RESULT.md` es el evento de retorno que ChatGPT Web puede leer. Si está disponible `gh` y se desea una señal adicional, el worker puede evolucionar para crear/actualizar un issue o PR; esta versión no necesita permisos GitHub API adicionales y sólo hace push al remoto configurado.
+`RESULT.md` es el evento de retorno que ChatGPT Web puede leer. Si está disponible `gh` y se desea una señal adicional, el worker puede evolucionar para crear/actualizar un issue o PR; esta versión no necesita permisos GitHub API adicionales y sólo hace push al remoto configurado. Si el checkout está sucio, el worker no toca sus cambios ni publica un commit: deja el diagnóstico en `~/.local/state/escribe-webhook/last-error.md`.
 
 ## Seguridad y límites
 

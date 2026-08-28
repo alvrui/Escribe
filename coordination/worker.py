@@ -32,7 +32,11 @@ def main() -> int:
         except BlockingIOError:
             return 0
         if run("git", "status", "--porcelain", check=False, capture_output=True).stdout:
-            return publish("blocked", "Checkout is dirty; no pull or execution was attempted.")
+            (STATE / "last-error.md").write_text(
+                "Checkout is dirty; no pull, execution, or commit was attempted.\n",
+                encoding="utf-8",
+            )
+            return 2
         run("git", "fetch", "origin", "main")
         run("git", "merge", "--ff-only", "origin/main")
         prompt = """Read AGENTS.md if it exists, then read coordination/CURRENT_TASK.md. Execute that task in this repository. Do not modify production systems, credentials, webhook configuration, or coordination/RESULT.md. Run appropriate tests. At the end, report a concise summary, files changed, tests run, and any blocker."""
