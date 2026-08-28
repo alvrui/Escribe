@@ -57,6 +57,23 @@ Cuando el resultado de Codex esté listo, el servicio o un watcher puede ejecuta
 python3 coordination/brave_wakeup.py
 ```
 
+## Puente bidireccional con ChatGPT Desktop
+
+El mismo script admite dos operaciones adicionales, siempre seleccionando una única pestaña de ChatGPT y rechazando borradores existentes:
+
+```sh
+# Copiar la última respuesta visible de Web al portapapeles
+python3 coordination/brave_wakeup.py --copy-last-response
+
+# Enviar al navegador el contenido actual del portapapeles
+python3 coordination/brave_wakeup.py --send-clipboard
+
+# Copiar la última respuesta de Web y pegarla/enviarla en ChatGPT Desktop
+python3 coordination/brave_wakeup.py --copy-last-response --desktop-send
+```
+
+La captura busca la última respuesta del asistente, pulsa su botón de copia cuando está disponible y guarda el texto en el portapapeles del sistema. El envío a Desktop requiere `xdotool`, una única ventana visible cuyo título contenga `ChatGPT` y un entorno gráfico X11; si no se cumplen esas condiciones, aborta sin pulsar teclas. El envío inverso reutiliza el portapapeles y la misma protección contra pestañas ambiguas o borradores humanos.
+
 El script termina con error si CDP no está disponible, no hay una pestaña ChatGPT, hay más de una, o el compositor contiene un borrador. Esas condiciones evitan enviar el aviso a una pestaña equivocada o destruir texto humano. El mensaje que recibe ChatGPT Web debe instruirle a leer `coordination/RESULT.md` en GitHub.
 
 ## Seguridad y límites
