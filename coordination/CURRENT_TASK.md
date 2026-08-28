@@ -6,8 +6,8 @@
 
 **Task ID:** STD-001
 **Estado:** PROPOSED
-**Origen:** Socia
-**Destino:** CLI; revisión posterior por Web
+**Origen:** Web
+**Destino:** CLI; coordinación y evaluación por Web
 **Repositorio:** `alvrui/Escribe`
 
 ### Objetivo
@@ -17,9 +17,9 @@ Definir y validar una versión mínima, robusta y segura del método estándar p
 ### Identidades y responsabilidades
 
 - **Álvaro:** aporta intención, prioridades, criterios de aceptación subjetivos y autorizaciones explícitas.
-- **Socia:** diseña y coordina; convierte intención en tareas con Task ID, escribe `coordination/CURRENT_TASK.md`, evalúa resultados y encadena sólo tareas seguras.
+- **Web:** analiza, diseña y coordina; convierte la intención de Álvaro en tareas con Task ID, escribe `coordination/CURRENT_TASK.md`, lee GitHub, evalúa resultados y encadena sólo tareas seguras.
+- **Socia:** actúa como taller Desktop/local; ejecuta UX, navegador, debugging, supervisión e intervención en el entorno local.
 - **CLI:** ejecuta en el checkout local: entiende → implementa → prueba → corrige → repite mientras el resultado sea objetivamente verificable; publica el resultado en `coordination/RESULT.md`.
-- **Web:** actúa como taller interactivo/local para UX, navegador, debugging, supervisión e intervención; lee GitHub y, si necesita ejecutar comandos, los delega en CLI.
 
 ### Fuente de verdad y estructura mínima
 
@@ -59,7 +59,7 @@ La revisión debe proponer la versión mínima robusta, cubriendo explícitament
 
   `PROJECT_UPDATE_READY repo=alvrui/Escribe task=STD-001`
 
-El wakeup debe ser una señal para que Web lea GitHub, no un transporte de contenido. Web debe revisar el resultado publicado y delegar en CLI cualquier comando necesario.
+El wakeup debe ser una señal para que Web lea GitHub, no un transporte de contenido. Web debe revisar el resultado publicado; si necesita ejecutar comandos, los encarga a Socia, y Socia puede delegarlos en CLI cuando corresponda.
 
 ### Entrega solicitada al CLI
 
