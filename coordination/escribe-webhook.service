@@ -1,0 +1,19 @@
+[Unit]
+Description=Escribe GitHub webhook receiver
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=%h/Documents/Codex/escribe
+EnvironmentFile=%h/.config/escribe-webhook.env
+ExecStart=/usr/bin/env python3 %h/Documents/Codex/escribe/coordination/webhook_receiver.py
+Restart=on-failure
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=%h/Documents/Codex/escribe %h/.local/state/escribe-webhook
+
+[Install]
+WantedBy=default.target
+
